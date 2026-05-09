@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alessio Dev | Portfolio Moderno</title>
+    <meta name="description" content="Portfolio professionale di Alessio, Web Designer e Developer specializzato in esperienze digitali moderne.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #070b14;
+            --card: #101826;
+            --card2: #131f32;
+            --accent: #00d4ff;
+            --accent2: #7c4dff;
+            --text: #ffffff;
+            --muted: #94a3b8;
+            --border: rgba(255,255,255,.08);
+            --shadow: 0 10px 40px rgba(0,0,0,.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* BACKGROUND */
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(0,212,255,.12), transparent 25%),
+                radial-gradient(circle at 80% 30%, rgba(124,77,255,.12), transparent 25%),
+                radial-gradient(circle at 50% 80%, rgba(0,212,255,.06), transparent 30%),
+                #070b14;
+        }
+
+        .grid {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 90%);
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            background: rgba(7,11,20,.6);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            width: min(1200px, 90%);
+            margin: auto;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .links { display: flex; gap: 35px; }
+        .links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            position: relative;
+            transition: .3s;
+        }
+
+        .links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 2px;
+            background: var(--accent);
+            transition: .3s;
+        }
+
+        .links a:hover::after { width: 100%; }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* HERO */
+        section { padding: 100px 0; }
+        .hero { min-height: 100vh; display: flex; align-items: center; }
+        .hero-container {
+            width: min(1200px, 90%);
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h3 { color: var(--accent); margin-bottom: 15px; font-weight: 600; letter-spacing: 1px; }
+        .hero-text h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 25px; }
+        .hero-text p { color: var(--muted); font-size: 1.15rem; max-width: 600px; }
+
+        .hero-buttons { display: flex; gap: 20px; margin-top: 40px; }
+        .btn {
+            padding: 16px 32px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-block;
+        }
+
+        .btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent2)); color: white; }
+        .btn-primary:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,212,255, .25); }
+        .btn-secondary { border: 1px solid var(--border); color: white; background: rgba(255,255,255,.03); }
+        .btn-secondary:hover { background: rgba(255,255,255,.08); transform: translateY(-5px); }
+
+        .hero-card {
+            position: relative;
+            height: 500px;
+            border-radius: 30px;
+            overflow: hidden;
+            background: linear-gradient(145deg, var(--card), var(--card2));
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .hero-card img { width: 100%; height: 100%; object-fit: cover; }
+        .glow {
+            position: absolute; width: 300px; height: 300px; background: var(--accent);
+            filter: blur(120px); opacity: .2; border-radius: 50%; top: -100px; right: -100px; pointer-events: none;
+        }
+
+        /* SECTION TITLES */
+        .section-title { font-size: 3rem; margin-bottom: 20px; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--muted); max-width: 700px; margin: 0 auto 70px; }
+
+        /* CARDS */
+        .container { width: min(1200px, 90%); margin: auto; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card {
+            background: rgba(255,255,255,.03);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 24px;
+            transition: .4s;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,.3); }
+        .icon {
+            width: 60px; height: 60px; border-radius: 18px; display: flex; align-items: center;
+            justify-content: center; font-size: 1.5rem; background: linear-gradient(135deg, var(--accent), var(--accent2));
+            margin-bottom: 25px;
+        }
+
+        /* PROJECTS */
+        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .project {
+            position: relative; overflow: hidden; border-radius: 28px;
+            height: 400px; background: #111; border: 1px solid var(--border);
+        }
+        .project img { width: 100%; height: 100%; object-fit: cover; transition: .6s; }
+        .project:hover img { transform: scale(1.08); }
+        .project-overlay {
+            position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.9), transparent 70%);
+            display: flex; align-items: flex-end; padding: 35px; opacity: 1;
+        }
+        .project-btn {
+            display: inline-block; padding: 12px 24px; border-radius: 12px;
+            background: white; color: black; text-decoration: none; font-weight: 700; margin-top: 15px;
+        }
+
+        /* CONTACT */
+        .contact-box {
+            background: linear-gradient(145deg, var(--card), var(--card2));
+            border: 1px solid var(--border); border-radius: 32px; padding: 60px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+        }
+        form { display: flex; flex-direction: column; gap: 20px; }
+        input, textarea {
+            background: rgba(255,255,255,.03); border: 1px solid var(--border);
+            padding: 18px; border-radius: 14px; color: white; font-size: 1rem; outline: none; transition: .3s;
+        }
+        input:focus, textarea:focus { border-color: var(--accent); background: rgba(255,255,255,.06); }
+        textarea { min-height: 150px; resize: none; }
+
+        footer { padding: 60px 0; text-align: center; color: var(--muted); border-top: 1px solid var(--border); margin-top: 50px; }
+
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* RESPONSIVE */
+        @media(max-width: 980px) {
+            .hero-container, .contact-box { grid-template-columns: 1fr; text-align: center; }
+            .hero-text h1 { font-size: 3.5rem; }
+            .hero-text p { margin: 0 auto; }
+            .hero-buttons { justify-content: center; }
+            .hero-card { height: 400px; max-width: 500px; margin: 0 auto; }
+        }
+
+        @media(max-width: 760px) {
+            .links {
+                position: fixed; top: 80px; right: -100%; width: 100%; height: calc(100vh - 80px);
+                background: var(--bg); flex-direction: column; align-items: center; padding-top: 50px; transition: .4s;
+            }
+            .links.active { right: 0; }
+            .menu-btn { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="grid"></div>
+
+<nav>
+    <div class="nav-container">
+        <a href="#home" class="logo">ALESSIO.dev</a>
+        <div class="links" id="links">
+            <a href="#home">Home</a>
+            <a href="#services">Servizi</a>
+            <a href="#projects">Progetti</a>
+            <a href="#contact">Contatti</a>
+        </div>
+        <button class="menu-btn" id="menuBtn" aria-label="Apri menu">☰</button>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-container">
+        <div class="hero-text reveal">
+            <h3>WEB DESIGNER & DEVELOPER</h3>
+            <h1>Creo esperienze digitali moderne.</h1>
+            <p>Portfolio professionale con design premium, animazioni fluide e performance elevate per far risaltare il tuo business.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">Guarda i progetti</a>
+                <a href="#contact" class="btn btn-secondary">Contattami</a>
+            </div>
+        </div>
+        <div class="hero-card reveal" id="tiltCard">
+            <div class="glow"></div>
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200" alt="Ritratto professionale Alessio">
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <div class="container">
+        <h2 class="section-title reveal">Servizi</h2>
+        <p class="section-subtitle reveal">Realizzo soluzioni digitali su misura, focalizzate su estetica e funzionalità.</p>
+        <div class="cards">
+            <div class="card reveal">
+                <div class="icon">⚡</div>
+                <h3>Frontend</h3>
+                <p>Interfacce moderne realizzate con le ultime tecnologie per garantire reattività e stile.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">🚀</div>
+                <h3>Performance</h3>
+                <p>Codice ottimizzato per caricamenti istantanei e punteggi SEO eccellenti.</p>
+            </div>
+            <div class="card reveal">
+                <div class="icon">🎨</div>
+                <h3>UI/UX Design</h3>
+                <p>Progettazione centrata sull'utente per massimizzare conversioni e coinvolgimento.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="container">
+        <h2 class="section-title reveal">Progetti Scelti</h2>
+        <div class="projects">
+            <div class="project reveal">
+                <img src="https://images.unsplash.com/photo-1556740749-887f6717d7e4?q=80&w=1400" alt="Preview E-commerce" loading="lazy">
+                <div class="project-overlay">
+                    <div class="project-content">
+                        <h3>E-commerce</h3>
+                        <p>Store online moderno ad alta velocità.</p>
+                        <a href="#" class="project-btn">Dettagli</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project reveal">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1400" alt="Preview Dashboard" loading="lazy">
+                <div class="project-overlay">
+                    <div class="project-content">
+                        <h3>Analytics App</h3>
+                        <p>Dashboard complessa per visualizzazione dati.</p>
+                        <a href="#" class="project-btn">Dettagli</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="contact-box reveal">
+            <div class="contact-info">
+                <h2>Parliamo del tuo progetto.</h2>
+                <p>Hai un'idea o vuoi rinnovare la tua immagine digitale? Sono pronto ad aiutarti.</p>
+            </div>
+            <form id="contactForm">
+                <input type="text" placeholder="Il tuo Nome" aria-label="Nome" required>
+                <input type="email" placeholder="La tua Email" aria-label="Email" required>
+                <textarea placeholder="Raccontami la tua idea..." aria-label="Messaggio" required></textarea>
+                <button type="submit" class="btn btn-primary">Invia Messaggio</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer>
+    © 2026 ALESSIO.dev — Creato con passione per il web.
+</footer>
+
+<script>
+    /* MOBILE MENU - Ottimizzato */
+    const menuBtn = document.getElementById("menuBtn");
+    const links = document.getElementById("links");
+    menuBtn.addEventListener("click", () => links.classList.toggle("active"));
+
+    /* SCROLL REVEAL - Intersection Observer (Performance Top) */
+    const observerOptions = { threshold: 0.15 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                observer.unobserve(entry.target); // Ferma l'osservazione una volta animato
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    /* 3D CARD EFFECT - Ottimizzato */
+    const card = document.getElementById("tiltCard");
+    let request;
+
+    card.addEventListener("mousemove", (e) => {
+        if (request) cancelAnimationFrame(request);
+        
+        request = requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const rotateX = ((y - rect.height / 2) / (rect.height / 2)) * -8;
+            const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * 8;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02,1.02,1.02)`;
+        });
+    });
+
+    card.addEventListener("mouseleave", () => {
+        cancelAnimationFrame(request);
+        card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale3d(1,1,1)";
+    });
+</script>
+
+</body>
+</html>
