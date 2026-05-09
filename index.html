@@ -3,64 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Personale</title>
+    <title>Portfolio | Awwwards Style</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <div class="preloader">
+        <div class="loader-text">Caricamento dell'esperienza...</div>
+    </div>
+
     <nav class="navbar">
-        <div class="nav-brand">[Il Tuo Nome]</div>
-        <div class="nav-links">
-            <a href="#about">Chi Sono</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Contatti</a>
-        </div>
+        <div class="logo" data-cursor="hover">A.C.</div>
+        <div class="menu-btn" data-cursor="hover">Menu</div>
     </nav>
 
-    <main>
-        <section class="hero fade-in">
-            <p class="subtitle">Studente & Appassionato di Scienze</p>
-            <h1>Ciao, sono [Il Tuo Nome].<br>Costruisco il mio futuro tra <span class="highlight">scienza</span> e <span class="highlight">creatività</span>.</h1>
+    <main data-scroll-container>
+        
+        <section class="hero">
+            <div class="hero-wrapper">
+                <p class="fade-up">Portfolio Digitale</p>
+                <h1 class="title-huge reveal-text">
+                    <span>Progettare</span><br>
+                    <span class="italic">Oltre</span> i Confini.
+                </h1>
+            </div>
+            <div class="scroll-indicator fade-up">Scorri verso il basso</div>
         </section>
 
-        <section id="about" class="bento-grid">
-            <div class="bento-item span-2 fade-in">
-                <h3>Il Mio Percorso</h3>
-                <p>Sono uno studente curioso, sempre alla ricerca di nuove sfide. Mi piace unire la logica del mondo scientifico con la sensibilità di quello umanistico e artistico. Il mio obiettivo è imparare continuamente.</p>
-            </div>
-            
-            <div class="bento-item fade-in">
-                <h3>Lingue</h3>
-                <ul id="languages-list" class="clean-list">
-                    </ul>
-            </div>
-
-            <div class="bento-item fade-in dark-box">
-                <h3>Interessi</h3>
-                <div id="interests-tags" class="tags-container">
-                    </div>
-            </div>
-        </section>
-
-        <section id="portfolio" class="portfolio-section fade-in">
-            <h2>Progetti & Esperienze</h2>
-            <div class="timeline" id="projects-timeline">
+        <section class="about section-padding">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2 class="reveal-text"><span>Estetica senza compromessi.</span></h2>
+                    <p class="fade-up mt-2">Unisco la logica del pensiero scientifico all'eleganza del design minimale. L'obiettivo non è solo creare qualcosa di bello, ma un'esperienza digitale memorabile, pulita e funzionale.</p>
                 </div>
+            </div>
         </section>
 
-        <section id="contact" class="contact-section fade-in">
-            <h2>Mettiamoci in contatto</h2>
-            <p>Sempre aperto a nuove opportunità di apprendimento e collaborazione.</p>
-            <a href="mailto:tuaemail@esempio.com" class="btn">Invia un'email</a>
+        <section class="projects section-padding">
+            <div class="projects-header">
+                <h2 class="reveal-text"><span>Opere</span><br><span>Selezionate</span></h2>
+            </div>
+
+            <div class="projects-wrapper">
+                <div class="project-item" data-cursor="project">
+                    <div class="project-image-wrapper image-reveal">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop" class="parallax-img" alt="Progetto 1">
+                    </div>
+                    <div class="project-info fade-up">
+                        <h3>01. Architettura Digitale</h3>
+                        <p>Ricerca / Design</p>
+                    </div>
+                </div>
+
+                <div class="project-item offset-right" data-cursor="project">
+                    <div class="project-image-wrapper image-reveal">
+                        <img src="https://images.unsplash.com/photo-1550859492-d5da9d8e45f3?q=80&w=2000&auto=format&fit=crop" class="parallax-img" alt="Progetto 2">
+                    </div>
+                    <div class="project-info fade-up">
+                        <h3>02. Progetto Biotecnologico</h3>
+                        <p>Analisi / Sviluppo</p>
+                    </div>
+                </div>
+                
+                <div class="project-item" data-cursor="project">
+                    <div class="project-image-wrapper image-reveal">
+                        <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop" class="parallax-img" alt="Progetto 3">
+                    </div>
+                    <div class="project-info fade-up">
+                        <h3>03. Sperimentazione Sonora</h3>
+                        <p>Audio / Arte</p>
+                    </div>
+                </div>
+            </div>
         </section>
+
+        <footer class="footer section-padding">
+            <h1 class="title-huge reveal-text"><span>Parliamo.</span></h1>
+            <div class="footer-bottom fade-up">
+                <a href="mailto:tuaemail@esempio.com" class="email-link" data-cursor="hover">tuaemail@esempio.com</a>
+                <div class="social-links">
+                    <a href="#" data-cursor="hover">LinkedIn</a>
+                    <a href="#" data-cursor="hover">GitHub</a>
+                </div>
+            </div>
+        </footer>
+
     </main>
-
-    <footer>
-        <p>&copy; <span id="current-year"></span> [Il Tuo Nome]. Tutti i diritti riservati.</p>
-    </footer>
 
     <script src="script.js"></script>
 </body>

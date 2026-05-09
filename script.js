@@ -1,84 +1,89 @@
-// ==========================================
-// INSERISCI QUI I TUOI DATI
-// ==========================================
-
-const myLanguages = [
-    { name: "Italiano", level: "Madrelingua" },
-    { name: "Tedesco", level: "Livello Avanzato" },
-    { name: "Inglese", level: "Livello Intermedio" }
-];
-
-const myInterests = [
-    "Pianoforte", "Nuoto", "Biotecnologie", "Attività Scout", "Lettura", "Tecnologia"
-];
-
-const myExperiences = [
-    {
-        date: "2024 - Attuale",
-        title: "Nome del Progetto 1",
-        description: "Breve descrizione di cosa hai fatto in questo progetto. Usa poche parole ma efficaci."
-    },
-    {
-        date: "2023 - 2024",
-        title: "Nome di un'Attività o Progetto 2",
-        description: "Breve descrizione del ruolo o dell'attività svolta."
-    },
-    {
-        date: "2021 - 2022",
-        title: "Nome del Progetto 3",
-        description: "Un'altra descrizione di un'esperienza passata, scolastica o extrascolastica."
-    }
-];
-
-// ==========================================
-// LOGICA DEL SITO (Non serve modificare)
-// ==========================================
-
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     
-    // Popola le Lingue
-    const languagesList = document.getElementById('languages-list');
-    myLanguages.forEach(lang => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span>${lang.name}</span> <span style="color: var(--text-muted); font-size: 0.9rem;">${lang.level}</span>`;
-        languagesList.appendChild(li);
-    });
+    // 1. Gestione Preloader
+    setTimeout(() => {
+        document.querySelector('.preloader').classList.add('hidden');
+        // Dopo che il preloader scompare, innesca le animazioni della Hero
+        setTimeout(() => {
+            document.querySelectorAll('.hero .reveal-text, .hero .fade-up').forEach(el => {
+                el.classList.add('is-visible');
+            });
+        }, 500);
+    }, 1500); // 1.5 secondi di caricamento scenico
 
-    // Popola gli Interessi
-    const interestsContainer = document.getElementById('interests-tags');
-    myInterests.forEach(interest => {
-        const span = document.createElement('span');
-        span.classList.add('tag');
-        span.textContent = interest;
-        interestsContainer.appendChild(span);
-    });
+    // 2. Cursore Personalizzato
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+    
+    // Controlla se siamo su desktop (il cursore personalizzato su mobile dà problemi)
+    if (window.innerWidth > 768) {
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
 
-    // Popola i Progetti / Esperienze
-    const timelineContainer = document.getElementById('projects-timeline');
-    myExperiences.forEach(exp => {
-        const item = document.createElement('div');
-        item.classList.add('timeline-item');
-        item.innerHTML = `
-            <div class="timeline-date">${exp.date}</div>
-            <div class="timeline-content">
-                <h4>${exp.title}</h4>
-                <p>${exp.description}</p>
-            </div>
-        `;
-        timelineContainer.appendChild(item);
-    });
+            // Il punto segue istantaneamente
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
 
-    // Anno corrente per il footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+            // L'outline segue con un leggero ritardo tramite animazione
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
 
-    // Animazioni allo scorrimento morbidissime
-    const observer = new IntersectionObserver((entries) => {
+        // Hover Effect del Cursore su link e pulsanti
+        const interactables = document.querySelectorAll('a, [data-cursor="hover"], [data-cursor="project"]');
+        
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if(el.dataset.cursor === "project") {
+                    cursorOutline.style.width = "80px";
+                    cursorOutline.style.height = "80px";
+                    cursorOutline.style.backgroundColor = "rgba(255,255,255,0.1)";
+                } else {
+                    cursorOutline.style.width = "60px";
+                    cursorOutline.style.height = "60px";
+                }
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = "40px";
+                cursorOutline.style.height = "40px";
+                cursorOutline.style.backgroundColor = "transparent";
+            });
+        });
+    }
+
+    // 3. Scroll Reveal (Intersection Observer)
+    // Mostra gli elementi quando entrano nell'area visibile dello schermo
+    const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.15
+    };
+
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target); // Ferma l'osservazione per farla apparire una sola volta
             }
         });
-    }, { threshold: 0.15 }); // Parte un po' più tardi per un effetto più elegante
+    }, observerOptions);
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    // Seleziona tutto ciò che deve animarsi tranne quelli nella hero
+    const elementsToReveal = document.querySelectorAll('.about .reveal-text, .projects .reveal-text, .footer .reveal-text, .fade-up:not(.hero .fade-up), .image-reveal');
+    
+    elementsToReveal.forEach(el => {
+        scrollObserver.observe(el);
+    });
+
+    // 4. Semplice Parallasse sulle immagini allo scroll
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        document.querySelectorAll('.parallax-img').forEach(img => {
+            const speed = 0.05; // Velocità della parallasse
+            img.style.transform = `scale(1.1) translateY(${scrolled * speed}px)`;
+        });
+    });
 });
