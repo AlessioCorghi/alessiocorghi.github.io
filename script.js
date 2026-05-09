@@ -1,157 +1,84 @@
-// --- CONFIGURAZIONE DATI (Modifica qui per personalizzare il sito) ---
+// ==========================================
+// INSERISCI QUI I TUOI DATI
+// ==========================================
 
-const skills = [
-    "JavaScript (ES6+)", "TypeScript", "React", "Node.js", 
-    "Python", "HTML5 & CSS3", "Git", "Docker", "SQL / NoSQL"
+const myLanguages = [
+    { name: "Italiano", level: "Madrelingua" },
+    { name: "Tedesco", level: "Livello Avanzato" },
+    { name: "Inglese", level: "Livello Intermedio" }
 ];
 
-const projectsData = [
+const myInterests = [
+    "Pianoforte", "Nuoto", "Biotecnologie", "Attività Scout", "Lettura", "Tecnologia"
+];
+
+const myExperiences = [
     {
-        title: "E-Commerce Platform",
-        description: "Una piattaforma di e-commerce completa con carrello dinamico, integrazione pagamenti e pannello di amministrazione.",
-        tech: ["React", "Node.js", "MongoDB", "Stripe"],
-        github: "https://github.com",
-        live: "https://example.com"
+        date: "2024 - Attuale",
+        title: "Nome del Progetto 1",
+        description: "Breve descrizione di cosa hai fatto in questo progetto. Usa poche parole ma efficaci."
     },
     {
-        title: "AI Chat Application",
-        description: "Applicazione di messaggistica in tempo reale con intelligenza artificiale integrata per traduzioni e suggerimenti di risposta.",
-        tech: ["TypeScript", "Socket.io", "OpenAI API"],
-        github: "https://github.com",
-        live: "" // Lascia vuoto se non c'è un link live
+        date: "2023 - 2024",
+        title: "Nome di un'Attività o Progetto 2",
+        description: "Breve descrizione del ruolo o dell'attività svolta."
     },
     {
-        title: "Data Visualization Dashboard",
-        description: "Dashboard interattiva per l'analisi di dati finanziari con grafici aggiornati in tempo reale.",
-        tech: ["Vue.js", "D3.js", "Express"],
-        github: "https://github.com",
-        live: "https://example.com"
-    },
-    {
-        title: "Task Management API",
-        description: "API RESTful scalabile per la gestione dei task aziendali, con autenticazione JWT e rate limiting.",
-        tech: ["Python", "Django REST", "PostgreSQL"],
-        github: "https://github.com",
-        live: ""
+        date: "2021 - 2022",
+        title: "Nome del Progetto 3",
+        description: "Un'altra descrizione di un'esperienza passata, scolastica o extrascolastica."
     }
 ];
 
-const typewriterPhrases = [
-    "Sviluppatore Full Stack.",
-    "Appassionato di UI/UX.",
-    "Risolutore di problemi.",
-    "Costruttore di architetture solide."
-];
-
-// --- LOGICA DELL'APPLICAZIONE (Non è necessario modificare sotto questa linea) ---
+// ==========================================
+// LOGICA DEL SITO (Non serve modificare)
+// ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Popolamento Dinamico Skills
-    const skillsContainer = document.getElementById('skills-container');
-    skills.forEach(skill => {
+    // Popola le Lingue
+    const languagesList = document.getElementById('languages-list');
+    myLanguages.forEach(lang => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${lang.name}</span> <span style="color: var(--text-muted); font-size: 0.9rem;">${lang.level}</span>`;
+        languagesList.appendChild(li);
+    });
+
+    // Popola gli Interessi
+    const interestsContainer = document.getElementById('interests-tags');
+    myInterests.forEach(interest => {
         const span = document.createElement('span');
-        span.classList.add('skill-tag');
-        span.textContent = skill;
-        skillsContainer.appendChild(span);
+        span.classList.add('tag');
+        span.textContent = interest;
+        interestsContainer.appendChild(span);
     });
 
-    // 2. Popolamento Dinamico Progetti
-    const projectsContainer = document.getElementById('projects-container');
-    projectsData.forEach(project => {
-        const card = document.createElement('div');
-        card.classList.add('project-card', 'animate-on-scroll');
-        
-        let linksHTML = '';
-        if (project.github) linksHTML += `<a href="${project.github}" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>`;
-        if (project.live) linksHTML += `<a href="${project.live}" target="_blank" aria-label="Live Site"><i class="fas fa-external-link-alt"></i></a>`;
-
-        const techHTML = project.tech.map(t => `<span>${t}</span>`).join('');
-
-        card.innerHTML = `
-            <div class="project-content">
-                <div class="project-header">
-                    <i class="far fa-folder"></i>
-                    <div class="project-links">${linksHTML}</div>
-                </div>
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
+    // Popola i Progetti / Esperienze
+    const timelineContainer = document.getElementById('projects-timeline');
+    myExperiences.forEach(exp => {
+        const item = document.createElement('div');
+        item.classList.add('timeline-item');
+        item.innerHTML = `
+            <div class="timeline-date">${exp.date}</div>
+            <div class="timeline-content">
+                <h4>${exp.title}</h4>
+                <p>${exp.description}</p>
             </div>
-            <div class="project-tech">${techHTML}</div>
         `;
-        projectsContainer.appendChild(card);
+        timelineContainer.appendChild(item);
     });
 
-    // 3. Effetto Typewriter (Macchina da scrivere)
-    const typeElement = document.querySelector('.typewriter');
-    let phraseIndex = 0;
-    let letterIndex = 0;
-    let isDeleting = false;
+    // Anno corrente per il footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    function type() {
-        const currentPhrase = typewriterPhrases[phraseIndex];
-        
-        if (isDeleting) {
-            typeElement.textContent = currentPhrase.substring(0, letterIndex - 1);
-            letterIndex--;
-        } else {
-            typeElement.textContent = currentPhrase.substring(0, letterIndex + 1);
-            letterIndex++;
-        }
-
-        let typeSpeed = isDeleting ? 50 : 100;
-
-        if (!isDeleting && letterIndex === currentPhrase.length) {
-            typeSpeed = 2000; // Pausa a fine frase
-            isDeleting = true;
-        } else if (isDeleting && letterIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % typewriterPhrases.length;
-            typeSpeed = 500; // Pausa prima della nuova frase
-        }
-
-        setTimeout(type, typeSpeed);
-    }
-    type();
-
-    // 4. Animazioni allo scorrimento (Intersection Observer)
+    // Animazioni allo scorrimento morbidissime
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // observer.unobserve(entry.target); // Decommenta se vuoi che l'animazione avvenga solo 1 volta
-            } else {
-                entry.target.classList.remove('visible'); // Rimuovi per ripetere l'animazione scorrendo su e giù
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 }); // Parte un po' più tardi per un effetto più elegante
 
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
-    // 5. Toggle Tema Chiaro/Scuro
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const icon = themeToggleBtn.querySelector('i');
-    
-    // Controlla preferenza di sistema o salvata
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        document.body.setAttribute('data-theme', 'light');
-        icon.classList.replace('fa-moon', 'fa-sun');
-    }
-
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.body.getAttribute('data-theme');
-        if (currentTheme === 'light') {
-            document.body.removeAttribute('data-theme');
-            icon.classList.replace('fa-sun', 'fa-moon');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.body.setAttribute('data-theme', 'light');
-            icon.classList.replace('fa-moon', 'fa-sun');
-            localStorage.setItem('theme', 'light');
-        }
-    });
-
-    // 6. Aggiorna l'anno nel footer
-    document.getElementById('year').textContent = new Date().getFullYear();
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 });
